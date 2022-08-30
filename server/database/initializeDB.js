@@ -1,45 +1,21 @@
-import Sequelize from 'sequelize';
+/* eslint-disable max-len */
+/*
+## What is this file?
+  Databases typically require some code to connect. This file stores that code.
+  Once the code is working, you should not need to update it very often.
+ */
 
+import mysql from 'mysql';
 import configOptions from './config.js';
-import modelList from '../models/index.js';
 
-const { DataTypes } = Sequelize;
+const env = process.env.NODE_ENV || 'development'; // this clause allows us to set our "environment" for development, production, or testing.
+const options = configOptions[env]; // this clause picks one of the options from the config file. We only have development set up just now.
 
-const env = process.env.NODE_ENV || 'development';
-const config = configOptions[env];
+const mysqlDB = mysql.createConnection(options); // connect to the database with the options we've stored
 
-let sequelizeDB;
-if (config.use_env_variable) {
-  sequelizeDB = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelizeDB = new Sequelize(
-    config.database,
-    config.username,
-    config.password,
-    config
-  );
-}
+const db = {};
 
-const db = Object.keys(modelList).reduce((collection, modelName) => {
-  if (!collection[modelName]) {
-    // eslint-disable-next-line no-param-reassign
-    collection[modelName] = modelList[modelName](sequelizeDB, DataTypes);
-  }
-  return collection;
-}, {});
+db.mysqlDB = mysqlDB;
+db.MySql = mysql;
 
-// const models = sequelizeDB.models;
-// Object.keys(models).map((modelKey) => models[modelKey])
-//   .filter((model) => model.associate !== undefined)
-//   .forEach((model) => model.associate(models));
-
-Object.keys(db).forEach((modelName) => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
-
-db.sequelizeDB = sequelizeDB;
-db.Sequelize = Sequelize;
-
-export default db;
+export default db; // this passes the database out when we include this file in other parts of the application
