@@ -263,5 +263,8 @@ div.carousel {
 
 .prev:hover,
 .next:hover {
+  background-color: hsla(0, 87%, 47%, 0.15);
+  /* red, green, blue, alpha */
+  color: rgb(250, 250, 250);
   /* Pick a good background colour for your hover pseudoclass */
 }
