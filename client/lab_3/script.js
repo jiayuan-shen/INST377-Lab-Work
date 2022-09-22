@@ -20,11 +20,11 @@ const totalSlides = slidesArray.length;
 
 function updateSlidePosition() {
   slidesArray.forEach((slide) => {
-    slide.classList.remove('visable');
-    slide.classList.remove('hidden');
+    slide.classList.remove('visible');
+    slide.classList.add('hidden');
   });
 
-  slides[slidePosition].classList.add('visable');
+  slides[slidePosition].classList.add('visible');
 
   // Using the .forEach array method, (array.forEach((element) => { per-element work goes here }))
   // loop through all the slides in your slideArray
@@ -36,7 +36,7 @@ function updateSlidePosition() {
 }
 
 function moveToNextSlide() {
-  if (slidePosition === totalSlides) {
+  if (slidePosition === totalSlides - 1) {
     slidePosition = 0;
   } else {
     slidePosition += 1;
@@ -50,6 +50,11 @@ function moveToNextSlide() {
   updateSlidePosition(); // this is how you call a function within a function
 }
 function moveToPrevSlide() {
+  if (slidePosition === 0) {
+    slidePosition = totalSlides - 1;
+  } else {
+    slidePosition -= 1;
+  }
   // add your code in here for when you click the "prev" button
   /*
     add an if statement here that checks
