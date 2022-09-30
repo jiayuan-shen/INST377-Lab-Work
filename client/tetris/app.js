@@ -1,6 +1,6 @@
-/* eslint-disable prefer-const */
-/* eslint-disable padded-blocks */
 /* eslint-disable no-loop-func */
+/* eslint-disable no-plusplus */
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-use-before-define */
 document.addEventListener('DOMContentLoaded', () => {
   const grid = document.querySelector('.grid');
@@ -101,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
     currentPosition += width;
     draw();
     freeze();
-
   }
   // freeze the tetromino
   function freeze() {
@@ -148,13 +147,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     current = theTetrominoes[random][currentRotation];
     draw();
-
   }
 
   // show next tetromino in mini grid
   const displaySquares = document.querySelectorAll('.mini-grid div');
   const displayWidth = 4;
-  let displayIndex = 0;
+  const displayIndex = 0;
 
   // the tetromino without rotation
   const upNextTetrominoes = [
@@ -175,7 +173,6 @@ document.addEventListener('DOMContentLoaded', () => {
     upNextTetrominoes[nextRandom].forEach((index) => {
       displaySquares[displayIndex + index].classList.add('tetromino');
       displaySquares[displayIndex + index].style.backgroundColor = colors[nextRandom];
-
     });
   }
   startBtn.addEventListener('click', () => {
