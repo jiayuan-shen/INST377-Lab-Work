@@ -1,11 +1,13 @@
+/* eslint-disable prefer-const */
 /* eslint-disable padded-blocks */
 /* eslint-disable no-loop-func */
 /* eslint-disable no-use-before-define */
 document.addEventListener('DOMContentLoaded', () => {
   const grid = document.querySelector('.grid');
-  const squares = Array.from(document.querySelectorAll('.grid div'));
+  let squares = Array.from(document.querySelectorAll('.grid div'));
   const ScoreDisplay = document.querySelector('#score');
   const StartBtn = document.querySelector('#start-button');
+  const width = 10;
 
   // The Tetrominoes
 
@@ -46,23 +48,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const theTetrominoes = [lTetromino, zTetromino, tTetromino, oTetromino, iTetromino];
 
+  let currentPosition = 4;
+  let currentRotation = 0;
+
+  let random = Math.floor(Math.random() * theTetrominoes.length);
+  let current = theTetrominoes[random][currentRotation];
+
+  // draw
+  function draw() {
+    current.forEach((index) => {
+      squares[currentPosition + index].classList.add('tetromino');
+    });
+  }
+
+  function undraw() {
+    current.forEach((index) => {
+      squares[currentPosition + index].classList.remove('tetromino');
+    });
+  }
+  // make the tetromino move down
+  timerId = setInterval(moveDown, 1000);
+  // move the tetromino
+  function moveDown() {
+    undraw();
+    currentPosition += width;
+    draw();
+
+  }
 });
-const currentPosition = 4;
-const currentRotation = 0;
-
-const random = Math.floor(Math.random() * theTetrominoes.length);
-const current = theTetrominoes[random][currentRotation];
-
-// draw
-function draw() {
-  current.forEach((index) => {
-    squares[currentPosition + index].classList.add('tetromino');
-  });
-}
-
-// undraw
-function undraw() {
-  current.forEach((index) => {
-    squares[currentPosition + index].classList.remove('tetromino');
-  });
-}
