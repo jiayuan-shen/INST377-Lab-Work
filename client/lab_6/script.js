@@ -11,8 +11,16 @@
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 */
 
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
+}
+
+
 function injectHTML(list) {
   console.log('fired injectHTML');
+
   /*
   ## JS and HTML Injection
     There are a bunch of methods to inject text or HTML into a document using JS
@@ -31,6 +39,12 @@ function injectHTML(list) {
 
 function processRestaurants(list) {
   console.log('fired restaurants list');
+  const range = [...Array(15).keys()];
+  const newArray = range.map((item)=>{
+    const index = getRandomIntInclusive(0, list.length);
+    return list[index];
+  })
+  return newArray;
 
   /*
     ## Process Data Separately From Injecting It
@@ -103,6 +117,7 @@ async function mainEvent() {
 
       // This constant will have the value of your 15-restaurant collection when it processes
       const restaurantList = processRestaurants(arrayFromJson.data);
+      console.log(restaurantList);
 
       // And this function call will perform the "side effect" of injecting the HTML list for you
       injectHTML(restaurantList);
