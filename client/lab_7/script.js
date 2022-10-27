@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable max-len */
 
 /*
@@ -17,7 +18,6 @@ function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
 }
 
-
 function injectHTML(list) {
   console.log('fired injectHTML');
   const target = document.querySelector('#restaurant_list');
@@ -26,7 +26,7 @@ function injectHTML(list) {
   const listEl = document.createElement('ol');
   target.appendChild(listEl);
 
-  list.forEach(item => {
+  list.forEach((item) => {
     const el = document.createElement('li');
     el.innerText = item.name;
     listEl.appendChild(el);
@@ -54,7 +54,7 @@ function processRestaurants(list) {
   const newArray = range.map((item) => {
     const index = getRandomIntInclusive(0, list.length);
     return list[index];
-  })
+  });
   return newArray;
 
   /*
@@ -75,6 +75,15 @@ function processRestaurants(list) {
       - Return only their name, category, and location
       - Return the new list of 15 restaurants so we can work on it separately in the HTML injector
     */
+}
+
+function filterList(array, filterInputValue) {
+  return newArray = array.filter((item) => {
+    if (!item.name) { return; }
+    const lowerCaseName = item.name.toLowerCase();
+    const lowerCaseQuery = filterInputValue.toLowerCase();
+    return lowerCaseName.includes(lowerCaseQuery);
+  });
 }
 
 async function mainEvent() {
@@ -120,6 +129,14 @@ async function mainEvent() {
     loadAnimation.classList.remove('lds-ellipsis');
     loadAnimation.classList.add('lds-ellipsis_hidden');
 
+    let currentList = [];
+
+    form.addEventListener('input', (event) => {
+      console.log(event.target.value);
+      const filteredList = filterList(currentList, event.target.value);
+      injectHTML(filteredList);
+    });
+
     // And here's an eventListener! It's listening for a "submit" button specifically being clicked
     // this is a synchronous event event, because we already did our async request above, and waited for it to resolve
     form.addEventListener('submit', (submitEvent) => {
@@ -127,11 +144,11 @@ async function mainEvent() {
       submitEvent.preventDefault();
 
       // This constant will have the value of your 15-restaurant collection when it processes
-      const restaurantList = processRestaurants(arrayFromJson.data);
-      console.log(restaurantList);
+      currentList = processRestaurants(arrayFromJson.data);
+      //   console.log(currentList);
 
       // And this function call will perform the "side effect" of injecting the HTML list for you
-      injectHTML(restaurantList);
+      injectHTML(currentList);
 
       // By separating the functions, we open the possibility of regenerating the list
       // without having to retrieve fresh data every time
