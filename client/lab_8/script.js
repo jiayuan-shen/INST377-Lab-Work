@@ -97,6 +97,16 @@ function filterList(array, filterInputValue) {
   });
 }
 
+function initMap() {
+  // so much so familiar, but we will need this to inject markers later!
+  console.log('initMap');
+  const map = L.map('map').setView([51.505, -0.09], 13);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map);
+  return map;
+}
 async function mainEvent() {
   /*
         ## Main Event
@@ -104,7 +114,7 @@ async function mainEvent() {
           When you're not working in a heavily-commented "learning" file, this also is more legible
           If you separate your work, when one piece is complete, you can save it and trust it
       */
-
+  const pageMap = initMap();
   // the async keyword means we can make API requests
   const form = document.querySelector('.main_form'); // get your main form so you can do JS with it
   const submit = document.querySelector('#get-resto'); // get a reference to your submit button
