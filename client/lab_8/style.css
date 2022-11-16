@@ -278,7 +278,10 @@
     color: rgb(250, 250, 250);
     /* Pick a good background colour for your hover pseudoclass */
   }
-  
+
+  /*MAP STYLES*/
+  #map { height: 180px; }
+
   
   
   /*
