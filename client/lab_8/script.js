@@ -100,7 +100,7 @@ function filterList(array, filterInputValue) {
 function initMap() {
   // so much so familiar, but we will need this to inject markers later!
   console.log('initMap');
-  const map = L.map('map').setView([51.505, -0.09], 13);
+  const map = L.map('map').setView([38.7849, -76.8721], 13);
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
